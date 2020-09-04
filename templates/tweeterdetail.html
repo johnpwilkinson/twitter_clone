@@ -1,0 +1,23 @@
+{% extends 'base.html' %} 
+{% block title %}{% endblock %}
+
+{% block content %}
+
+
+<h1>User Details</h1>
+<p># of Accounts I am Following: {{tweeter.followers.all.count}}</p>
+<p># of Tweets I have written: {{count}}</p>
+    
+<p>{{tweeter.username}}</p> 
+<p>{{tweeter.age}}</p>
+<p>{{tweeter.bio}}</p> 
+<p>{{tweeter.display_name}}</p>
+<h1>FOLLOWERS</h1>
+{% for each in tweeter.following.all %}
+<li>{{each}}</li>
+{% endfor %}
+<h1>FOLLOWING</h1>
+{% for each in tweeter.followers.all %}
+<li>{{each}}</li>
+{% endfor %}
+{% endblock %}

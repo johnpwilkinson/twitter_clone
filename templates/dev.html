@@ -1,0 +1,85 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Current Tickets for {{dev.username}}</h1>
+{% if current_tickets %}
+{% for ticket in current_tickets %}
+<div class='card'>
+    <div class='card-header'>
+        <h2 class="card-title">
+            {{ticket.ticket_title}}
+        </h2>
+        ID: {{ticket.id}}
+    </div>
+    <div class="card-body">
+        <p class="card-text">Description: {{ticket.ticket_description}}</p>
+        <p class="card-text">Submitted By: {{ticket.ticket_owner}} on {{ticket.submission_time}}</p>
+        <p class="card-text">Assigned To: {{ticket.who_assigned}}</p>
+        <p class="card-text">Completed By: {{ticket.who_completed}}</p>
+        <p class="card-text">Status: {{ticket.ticket_status}}
+        </p>
+
+    </div>
+
+</div>
+
+{% endfor %}
+{% else %}
+{{dev.username}} does not have any current tickets
+{% endif %}
+
+<h1>Completed Tickets by {{dev.username}}</h1>
+{% if completed_tickets %}
+{% for ticket in completed_tickets %}
+<div class='card'>
+    <div class='card-header'>
+        <h2 class="card-title">
+            {{ticket.ticket_title}}
+        </h2>
+        ID: {{ticket.id}}
+    </div>
+    <div class="card-body">
+        <p class="card-text">Description: {{ticket.ticket_description}}</p>
+        <p class="card-text">Submitted By: {{ticket.ticket_owner}} on {{ticket.submission_time}}</p>
+        <p class="card-text">Assigned To: {{ticket.who_assigned}}</p>
+        <p class="card-text">Completed By: {{ticket.who_completed}}</p>
+        <p class="card-text">Status: {{ticket.ticket_status}}
+        </p>
+
+    </div>
+
+</div>
+
+{% endfor %}
+{% else %}
+{{dev.username}} does not have any completed tickets
+{% endif %}
+
+<h1>Tickets Owned by {{dev.username}}</h1>
+{% if owned_tickets %}
+{% for ticket in owned_tickets %}
+<div class='card'>
+    <div class='card-header'>
+        <h2 class="card-title">
+            {{ticket.ticket_title}}
+        </h2>
+        ID: {{ticket.id}}
+    </div>
+    <div class="card-body">
+        <p class="card-text">Description: {{ticket.ticket_description}}</p>
+        <p class="card-text">Submitted By: {{ticket.ticket_owner}} on {{ticket.submission_time}}</p>
+        <p class="card-text">Assigned To: {{ticket.who_assigned}}</p>
+        <p class="card-text">Completed By: {{ticket.who_completed}}</p>
+        <p class="card-text">Status: {{ticket.ticket_status}}
+        </p>
+
+    </div>
+
+</div>
+
+{% endfor %}
+{% else %}
+{{dev.username}} does not own any tickets
+{% endif %}
+{% endblock %}

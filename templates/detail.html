@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class='card'>
+    <div class='card-header'>
+        <h2 class="card-title">
+            {{ticket.ticket_title}}
+        </h2>
+        ID: {{ticket.id}}
+    </div>
+    <div class="card-body">
+        <p class="card-text">Description: {{ticket.ticket_description}}</p>
+        <p class="card-text">Submitted By: {{ticket.ticket_owner}} on {{ticket.submission_time}}</p>
+        <p class="card-text">Assigned To: {{ticket.who_assigned}}</p>
+        <p class="card-text">Completed By: {{ticket.who_completed}}</p>
+        <p class="card-text">Status: {{ticket.ticket_status}}
+        </p>
+
+    </div>
+
+</div>
+{% endblock %}

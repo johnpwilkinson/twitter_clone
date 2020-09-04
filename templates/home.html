@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block title %}{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+Home Page
+{% if notifs %}
+{% if notifs > 1 %}
+<a href='/notifications/'>You have {{notifs}} new notifications</a>
+{% else %}
+<a href='/notifications/'>You have {{notifs}} new notification</a>
+{% endif %}
+{% endif %}
+{% for tweet in feed %}
+<div>
+{{tweet.tweet}}
+<a href='user/{{tweet.tweeter}}'>{{tweet.tweeter}}</a>
+{{tweet.submission_time}}
+<a href='/follow/{{tweet.tweeter.id}}/'>Follow ME</a>
+<a href='/tweet/{{tweet.id}}'>Click here to view tweet Details</a>
+</div>
+{% endfor %}
+{% else %}
+<p>Log-in to use Twitter</p>
+<a href='/users/login/' class='btn btn-primary'>Click Here to Log-in</a>
+{% endif %} 
+{% endblock %}

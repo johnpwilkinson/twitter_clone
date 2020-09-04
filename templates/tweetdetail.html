@@ -1,0 +1,12 @@
+{% extends 'base.html' %} 
+{% block title %}{% endblock %}
+
+{% block content %}
+
+
+{% if tweet %}
+<p>{{tweet.tweet}}</p>
+<p>{{tweet.tweeter}}</p>
+<p>{{tweet.submission_time}}</p>
+{% endif %}
+{% endblock %}
