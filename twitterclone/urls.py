@@ -21,11 +21,11 @@ from notification import views as notifviews
 urlpatterns = [
     path('', userviews.index, name='home'),
     path('admin/', admin.site.urls),
-    path('tweet/<slug:tweet_id>/', tweetviews.tweet_detail, name='tweet detail'),
-    path('signup/', userviews.signup_view, name='signup'),
-    path('user/<slug:user_name>/', userviews.user_detail_view, name='user_detail'),
+    path('tweet/<slug:tweet_id>/', tweetviews.TweetDetailView.as_view(), name='tweet detail'),
+    path('signup/', userviews.SignUpView.as_view(), name='signup'),
+    path('user/<slug:user_name>/', userviews.UserDetailView.as_view(), name='user_detail'),
     path('users/', include('django.contrib.auth.urls')),
-    path('tweet/', tweetviews.new_tweet, name='tweet'),
+    path('tweet/', tweetviews.NewTweet.as_view(), name='tweet'),
     path('follow/<int:user_id>/', tweetviews.follow, name='follow'),
     path('notifications/', notifviews.notificationview, name='notifications'),
 ]

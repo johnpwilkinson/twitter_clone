@@ -7,19 +7,42 @@ from .models import TwitterUser
 from tweet.models import Tweets
 from notification.models import Notification
 from django.db.models import Q
+from django.views.generic import View, ListView
 
-def signup_view(request):
-    if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
+
+# def signup_view(request):
+#     if request.method == "POST":
+#         form = CustomUserCreationForm(request.POST)
+#         if form.is_valid():
+#                 form.save()
+#         username = form.cleaned_data.get('username')
+#         password = form.cleaned_data.get('password1')
+#         user = authenticate(username=username, password=password)
+#         login(request, user)
+#         return HttpResponseRedirect(reverse('home'))
+#     form = CustomUserCreationForm()
+#     return render(request, 'genericform.html', {'form': form})
+
+class SignUpView(View):
+    form_class = CustomUserCreationForm
+    initial = {'key': 'value'}
+    template_name = 'genericform.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
         if form.is_valid():
-                form.save()
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password1')
-        user = authenticate(username=username, password=password)
-        login(request, user)
-        return HttpResponseRedirect(reverse('home'))
-    form = CustomUserCreationForm()
-    return render(request, 'genericform.html', {'form': form})
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return HttpResponseRedirect(reverse('home'))
+        return render(request, self.template_name, {'form': form})
+
 
 @login_required(login_url='/users/login')
 def index(request):
@@ -39,7 +62,16 @@ def index(request):
     notif_count = Notification.objects.filter(atted_person=request.user.id, read=False).count()
     return render(request, 'home.html', {'feed': followingTweets, 'notifs': notif_count})
 
-def user_detail_view(request, user_name):
-    tweeter = TwitterUser.objects.filter(username=user_name).first()
-    count = Tweets.objects.filter(tweeter=tweeter).count
-    return render(request, 'tweeterdetail.html', {'tweeter': tweeter, 'count': count})
+# def user_detail_view(request, user_name):
+#     tweeter = TwitterUser.objects.filter(username=user_name).first()
+#     count = Tweets.objects.filter(tweeter=tweeter).count
+#     return render(request, 'tweeterdetail.html', {'tweeter': tweeter, 'count': count})
+
+class UserDetailView(ListView):
+    model = TwitterUser
+    template_name = 'tweeterdetail.html'
+    context_object_name = 'tweeter'
+
+    def get_queryset(self, *args, **kwargs):
+        user_name = self.kwargs.get('user_name')
+        return TwitterUser.objects.filter(username=user_name).first()
